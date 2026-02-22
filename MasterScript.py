@@ -150,7 +150,7 @@ if __name__ == "__main__":
 
     while RUN_COUNT < MAX_RUNS:
         schedule.run_pending()
-        time.sleep(60)
+        time.sleep(1800)
     
     print("Process Finished.")
     sys.exit(0)
