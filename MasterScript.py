@@ -18,8 +18,8 @@ if not MEMBER_NAME:
     MEMBER_NAME = input("Enter your Name: ").strip()
     if not MEMBER_NAME: MEMBER_NAME = "Anonymous_Member"
 
-# Token Setup (Only if NOT in Test Mode)
-TEST_MODE = os.getenv("QCC_TEST_MODE", "1").strip() not in ("0", "false", "False")
+# Default is REAL mode unless QCC_TEST_MODE is explicitly set to a truthy value.
+TEST_MODE = os.getenv("QCC_TEST_MODE", "0").strip().lower() in ("1", "true", "yes", "y")
 
 IBM_TOKEN = os.getenv("IBM_QUANTUM_TOKEN")
 if not TEST_MODE and not IBM_TOKEN:
@@ -56,7 +56,7 @@ def run_quantum_experiment():
     
     try:
         if not TEST_MODE:
-            token = os.getenv("IBM_QUANTUM_TOKEN")
+            token = IBM_TOKEN or os.getenv("IBM_QUANTUM_TOKEN")
             service = QiskitRuntimeService(channel="ibm_quantum_platform", token=token)
             
             print("Listing backends and queue depths:")
