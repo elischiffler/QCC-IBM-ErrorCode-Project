@@ -21,11 +21,13 @@ python -m pip install -r requirements.txt
 ### Windows (PowerShell)
 
 ```powershell
-cd "C:\\path\\to\\QCC-Club"
+# Navigate to the folder (Use single backslashes or even forward slashes)
+cd "C:\path\to\QCC-Club"
 py -m venv .venv
-.\\.venv\\Scripts\\Activate.ps1
-py -m pip install --upgrade pip
-py -m pip install -r requirements.txt
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python MasterScript.py
 ```
 
 ## Running on test mode:
