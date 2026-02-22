@@ -65,7 +65,16 @@ Close and reopen your terminal after `setx` on Windows.
 Make sure your virtual environment is activated (you should see `(.venv)` in your terminal), then run:
 
 ```bash
-python MasterScript.py
+nohup python MasterScript.py &
+```
+To check if process is still running
+```bash
+ps aux | grep MasterScript.py
+```
+
+To kill the process
+```bash
+pkill -f MasterScript.py
 ```
 
 ### Windows (PowerShell)
@@ -73,9 +82,14 @@ python MasterScript.py
 Make sure your virtual environment is activated, then run:
 
 ```powershell
-py .\MasterScript.py
+Start-Process pythonw.exe ".\MasterScript.py"
 ```
+Find process in Task Manager to see if it is still running (look for "Python" under the "Background processes" section)
 
+Too kill the process
+```powershell
+Stop-Process -Name "pythonw"
+```
 ## Notes
 
 - If you did **not** set `IBM_QUANTUM_TOKEN`, the program will prompt you to paste your token (input hidden).

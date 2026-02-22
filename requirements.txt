@@ -4,3 +4,4 @@ qiskit-experiments
 matplotlib
 pylatexenc
 qiskit-aer
+schedule
