@@ -11,7 +11,7 @@ Download this folder as a ZIP (or clone it) and open a terminal in the project d
 ### macOS / Linux
 
 ```bash
-cd "/path/to/QCC-Club"
+cd "/path/to/project-folder"
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
@@ -22,7 +22,7 @@ python -m pip install -r requirements.txt
 
 ```powershell
 # Navigate to the folder (Use single backslashes or even forward slashes)
-cd "C:\path\to\QCC-Club"
+cd "C:\path\to\project-folder"
 py -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
@@ -36,11 +36,11 @@ export QCC_TEST_MODE=1
 python MasterScript.py
 ```
 
-## IBM Quantum token
+## IBM Quantum token (Optional)
 
 The script uses your IBM Quantum API token to log in.
 
-**Set an environment variable** so you won't have to paste it every time.
+**Set an environment variable** So you don't need to add it later when you run the file
 
 ### macOS / Linux
 
@@ -64,16 +64,7 @@ Close and reopen your terminal after `setx` on Windows.
 Make sure your virtual environment is activated (you should see `(.venv)` in your terminal), then run:
 
 ```bash
-nohup python MasterScript.py &
-```
-To check if process is still running
-```bash
-ps aux | grep MasterScript.py
-```
-
-To kill the process
-```bash
-pkill -f MasterScript.py
+python MasterScript.py
 ```
 
 ### Windows (PowerShell)
@@ -81,14 +72,9 @@ pkill -f MasterScript.py
 Make sure your virtual environment is activated, then run:
 
 ```powershell
-Start-Process pythonw.exe ".\MasterScript.py"
+python MasterScript.py
 ```
-Find process in Task Manager to see if it is still running (look for "Python" under the "Background processes" section)
 
-Too kill the process
-```powershell
-Stop-Process -Name "pythonw"
-```
 ## Notes
 
 - If you did **not** set `IBM_QUANTUM_TOKEN`, the program will prompt you to paste your token (input hidden).
