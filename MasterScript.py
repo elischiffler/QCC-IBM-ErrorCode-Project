@@ -99,6 +99,24 @@ def run_quantum_experiment():
                 os._exit(1) # Immediate hard exit of the background process
             else:
                 raise e # Re-raise if it's a different error (like connection)
+        
+        # --- TIMING ---
+        if not TEST_MODE:
+            try:
+                job = service.job(exp_data.job_ids[0])
+                metrics = job.metrics()
+                u_total_s = metrics.get('usage', {}).get('seconds', 0)
+                usage_m, usage_s = divmod(u_total_s, 60)
+                
+                ts = job.timestamps()
+                created_at = ts.get('created')
+                running_at = ts.get('running')
+                
+                if created_at and running_at:
+                    p_total_s = (running_at - created_at).total_seconds()
+                    pending_m, pending_s = divmod(int(p_total_s), 60)
+            except Exception as e:
+                print(f"Timing error: {e}")
 
         # --- RESULTS ---
         result = exp_data.analysis_results("EPC", dataframe=False)
