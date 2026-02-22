@@ -12,15 +12,26 @@ import matplotlib.pyplot as plt
 from qiskit_ibm_runtime import QiskitRuntimeService, IBMRuntimeError
 from qiskit_experiments.library import StandardRB
 
+# Member Name Setup
+MEMBER_NAME = os.getenv("QCC_MEMBER_NAME")
+if not MEMBER_NAME:
+    MEMBER_NAME = input("Enter your Name: ").strip()
+    if not MEMBER_NAME: MEMBER_NAME = "Anonymous_Member"
+
+# Token Setup (Only if NOT in Test Mode)
+TEST_MODE = os.getenv("QCC_TEST_MODE", "1").strip() not in ("0", "false", "False")
+
+IBM_TOKEN = os.getenv("IBM_QUANTUM_TOKEN")
+if not TEST_MODE and not IBM_TOKEN:
+    IBM_TOKEN = getpass.getpass("Paste your IBM Quantum Token: ").strip()
+
 # --- CONFIGURATION ---
 CSV_FILENAME = "qcc_results.csv"
 CSV_HEADERS = [
-    "DateTime", "Member Name", "Backend Name", "Qubit Tested", 
+    "Date", "Time", "Member Name", "Backend Name", "Qubit Tested", 
     "EPC Score", "Uncertainty (±)", "Usage Time (m)", 
     "Usage Time (s)", "Pending Time (m)", "Pending Time (s)"
 ]
-MEMBER_NAME = getpass.getuser() 
-TEST_MODE = os.getenv("QCC_TEST_MODE", "1").strip() not in ("0", "false", "False")
 
 MAX_RUNS = 7
 RUN_COUNT = 0
@@ -130,7 +141,8 @@ def run_quantum_experiment():
             epc_val, epc_err = float(epc), 0.0
 
         save_to_csv({
-            "DateTime": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "Date": datetime.now().strftime("%m/%d/%Y"),
+            "Time": datetime.now().strftime("%H:%M:%S"),
             "Member Name": MEMBER_NAME,
             "Backend Name": BACKEND_NAME,
             "Qubit Tested": str(QUBIT_TO_TEST),
