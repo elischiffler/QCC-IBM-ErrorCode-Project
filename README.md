@@ -77,6 +77,8 @@ python -m pip install -r requirements.txt
 ```
 
 ## Running on test mode:
+```bash
 export QCC_TEST_MODE=1
 export QCC_NOISE=1
 python MasterScript.py
+```
