@@ -28,6 +28,13 @@ py -m pip install --upgrade pip
 py -m pip install -r requirements.txt
 ```
 
+## Running on test mode:
+```bash
+export QCC_TEST_MODE=1
+export QCC_NOISE=1
+python MasterScript.py
+```
+
 ## IBM Quantum token
 
 The script uses your IBM Quantum API token to log in.
@@ -74,11 +81,4 @@ py .\MasterScript.py
 
 ```bash
 python -m pip install -r requirements.txt
-```
-
-## Running on test mode:
-```bash
-export QCC_TEST_MODE=1
-export QCC_NOISE=1
-python MasterScript.py
 ```
