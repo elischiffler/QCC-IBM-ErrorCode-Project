@@ -64,9 +64,19 @@ def run_quantum_experiment():
             print(f"Selected backend: {BACKEND_NAME}")
             QUBIT_TO_TEST = [0]
         else:
+            # --- NOISY TEST MODE (AER) ---
             from qiskit_aer import AerSimulator
             from qiskit_aer.noise import NoiseModel, depolarizing_error, ReadoutError
-            backend = AerSimulator() # Simple simulator for logic check
+        
+            noise_model = NoiseModel()
+            p1q = 0.001 
+            error_1q = depolarizing_error(p1q, 1)
+            noise_model.add_all_qubit_quantum_error(error_1q, ['sx', 'x', 'rz'])
+            p_ro = 0.02
+            error_ro = ReadoutError([[1 - p_ro, p_ro], [p_ro, 1 - p_ro]])
+            noise_model.add_all_qubit_readout_error(error_ro)
+            backend = AerSimulator(noise_model=noise_model)
+        
             BACKEND_NAME = "simulated_noisy_backend"
             QUBIT_TO_TEST = [0]
             usage_s, pending_s = 15, 2
