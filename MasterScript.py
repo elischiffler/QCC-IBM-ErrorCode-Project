@@ -8,7 +8,7 @@ MY_API_TOKEN = "PASTE_YOUR_IBM_QUANTUM_TOKEN_HERE"
 
 # Save the account to disk (only needs to be done once per session)
 try:
-    QiskitRuntimeService.save_account(channel="ibm_quantum_platform", token="RdaF14Kycfmmphxu398P0RFCpoUYAZrcu8dIv0pXnHc4", overwrite=True)
+    QiskitRuntimeService.save_account(channel="ibm_quantum_platform", token=MY_API_TOKEN, overwrite=True)
     service = QiskitRuntimeService()
     print("Successfully logged in!")
 except Exception as e:
