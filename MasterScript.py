@@ -12,6 +12,10 @@ import matplotlib.pyplot as plt
 from qiskit_ibm_runtime import QiskitRuntimeService, IBMRuntimeError
 from qiskit_experiments.library import StandardRB
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+CSV_FILENAME = os.path.join(SCRIPT_DIR, "qcc_results.csv")
+PLOT_FILENAME = os.path.join(SCRIPT_DIR, "latest_rb_plot.png")
+
 # Member Name Setup
 MEMBER_NAME = os.getenv("QCC_MEMBER_NAME")
 if not MEMBER_NAME:
@@ -26,7 +30,6 @@ if not TEST_MODE and not IBM_TOKEN:
     IBM_TOKEN = getpass.getpass("Paste your IBM Quantum Token: ").strip()
 
 # --- CONFIGURATION ---
-CSV_FILENAME = "qcc_results.csv"
 CSV_HEADERS = [
     "Date", "Time", "Member Name", "Backend Name", "Qubit Tested", 
     "EPC Score", "Uncertainty (±)", "Usage Time (m)", 
@@ -120,12 +123,11 @@ def run_quantum_experiment():
                 usage_m, usage_s = divmod(u_total_s, 60)
                 
                 ts = job.timestamps()
-                created_at = ts.get('created')
-                running_at = ts.get('running')
-                
-                if created_at and running_at:
-                    p_total_s = (running_at - created_at).total_seconds()
-                    pending_m, pending_s = divmod(int(p_total_s), 60)
+                created = job.creation_date
+                started = metrics.get('timestamps', {}).get('running')
+                if created and started:
+                    p_seconds = (started - created).total_seconds()
+                    pending_m, pending_s = divmod(int(p_seconds), 60)
             except Exception as e:
                 print(f"Timing error: {e}")
 
@@ -154,8 +156,8 @@ def run_quantum_experiment():
             "Pending Time (s)": int(pending_s)
         })
         
-        fig = exp_data.figure(0).figure
-        fig.savefig("latest_rb_plot.png")
+
+        exp_data.figure(0).figure.savefig(PLOT_FILENAME)
         print(f"Run {RUN_COUNT} Complete.")
 
     except Exception as e:
