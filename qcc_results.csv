@@ -1,0 +1,4 @@
+Date,Time,Member Name,Backend Name,Qubit Tested,EPC Score,Uncertainty (±),Usage Time (m),Usage Time (s),Pending Time (m),Pending Time (s)
+07/18/2026,12:11:09,Eli Schiffler,ibm_kingston,[0],0.000052,0.003735,0,0,0,0
+07/18/2026,12:59:09,Eli Schiffler,ibm_kingston,[0],0.000086,0.003018,0,0,0,0
+07/18/2026,14:00:14,Eli Schiffler,ibm_marrakesh,[0],0.000087,0.001472,0,0,0,0

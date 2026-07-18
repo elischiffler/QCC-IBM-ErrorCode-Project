@@ -29,6 +29,10 @@ IBM_TOKEN = os.getenv("IBM_QUANTUM_TOKEN")
 if not TEST_MODE and not IBM_TOKEN:
     IBM_TOKEN = getpass.getpass("Paste your IBM Quantum Token: ").strip()
 
+IBM_INSTANCE = os.getenv("QCC_IBM_INSTANCE")
+if not TEST_MODE and not IBM_INSTANCE:
+    IBM_INSTANCE = input("Enter your IBM Quantum Instance (CRN): ").strip()
+
 # --- CONFIGURATION ---
 CSV_HEADERS = [
     "Date", "Time", "Member Name", "Backend Name", "Qubit Tested", 
@@ -60,7 +64,8 @@ def run_quantum_experiment():
     try:
         if not TEST_MODE:
             token = IBM_TOKEN or os.getenv("IBM_QUANTUM_TOKEN")
-            service = QiskitRuntimeService(channel="ibm_quantum_platform", token=token)
+            instance = IBM_INSTANCE or os.getenv("QCC_IBM_INSTANCE")
+            service = QiskitRuntimeService(channel="ibm_quantum_platform", token=token, instance=instance)
             
             print("Listing backends and queue depths:")
             candidates = []
@@ -157,7 +162,9 @@ def run_quantum_experiment():
         })
         
 
-        exp_data.figure(0).figure.savefig(PLOT_FILENAME)
+        fig = exp_data.figure(0).figure
+        fig.set_size_inches(15, 10)
+        fig.savefig(PLOT_FILENAME, dpi=100)
         print(f"Run {RUN_COUNT} Complete.")
 
     except Exception as e:
